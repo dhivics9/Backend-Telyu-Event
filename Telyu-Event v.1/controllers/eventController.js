@@ -1,3 +1,4 @@
+const { or } = require('sequelize');
 const { Event } = require('../models')
 const { Registration } = require('../models');
 const path = require('path');
@@ -53,6 +54,7 @@ exports.addEvent = async (req, res) => {
         location,
         price,
         organizationId: req.user.id,
+        organizationName: req.user.name,
         image: imagePath,
       });
       res.status(201).json(event);
@@ -68,7 +70,7 @@ exports.updateEvent = async (req, res) => {
   try {
     const event = await Event.findByPk(id);
     if (!event) {
-      return res.status(404).json({ message: "Gaada sundel" });
+      return res.status(404).json({ message: "Cannot find event" });
     }
     const { title, description, date, location, price, image } = req.body;
     await event.update({
@@ -92,7 +94,7 @@ exports.deleteEvent = async (req, res) => {
   try {
     const event = await Event.findByPk(id);
     if (!event) {
-      return res.status(404).json({ message: "Gaada sundel" });
+      return res.status(404).json({ message: "Cannot find event" });
     } 
     await event.destroy();
     res.json({ message: "Event deleted successfully" });
@@ -109,7 +111,7 @@ exports.registerForEvent = async (req, res) => {
       const { eventId } = req.params;
       const event = await Event.findByPk(eventId);
       if (!event) {
-        return res.status(404).json({ message: "Gaada sundel" });
+        return res.status(404).json({ message: "Cannot find event" });
         }
       const registration = await Registration.findOne({ where: { userId: req.user.id, eventId } });
       if (registration) {
