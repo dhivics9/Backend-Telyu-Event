@@ -1,4 +1,3 @@
-const { or } = require('sequelize');
 const { Event } = require('../models')
 const { Registration } = require('../models');
 const path = require('path');
