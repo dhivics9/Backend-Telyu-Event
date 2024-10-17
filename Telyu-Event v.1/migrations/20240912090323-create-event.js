@@ -24,6 +24,12 @@ module.exports = {
       price: {
         type: Sequelize.FLOAT
       },
+      organizationId: {
+        type: Sequelize.INTEGER
+      },
+      organizationName: {
+        type: Sequelize.STRING
+      },
       image: {
         type: Sequelize.STRING
       },
