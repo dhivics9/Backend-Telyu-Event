@@ -1,0 +1,54 @@
+// Make payment for an event (Not complete)
+// exports.makePayment = async (req, res) => {
+//   try {
+//   const { eventId } = req.params;
+//   const event = await Event.findByPk(eventId);
+
+//   const snap = new Midtrans.Snap({
+//     isProduction : false,
+//     serverKey : process.env.MIDTRANS_SERVER_KEY,
+//     clientKey : process.env.MIDTRANS_CLIENT_KEY
+//   });
+
+//   const token = await midtrans.snap.createTransactionToken({
+//     transaction_details: {
+//       order_id: `EVENT-${eventId}`,
+//       gross_amount: event.price,
+//     },
+//     item_details: [
+//       {
+//         id: eventId,
+//         price: event.price,
+//         quantity: 1,
+//         name: event.title,
+//       },
+//     ],
+//     customer_details: {
+//       first_name: req.user.name,
+//       email: req.user.email,
+//     },
+//   });
+
+//   res.redirect(`https://app.sandbox.midtrans.com/snap/v1/redirect/${token}`);
+
+// } catch (err) {
+//   console.error(err);
+//   res.status(500).json({ message: 'Cannot find event' });
+// } 
+// };
+
+// exports.handlePaymentNotification = async (req, res) => {
+//   const notification = req.body;
+//   const orderId = notification.order_id;
+//   const paymentStatus = notification.payment_status;
+
+//   if (paymentStatus === 'settlement') {
+//     // Update payment status in your database
+//     const registration = await Registration.findOne({ where: { userId: req.user.id, eventId: orderId } });
+//     registration.paymentStatus = 'paid';
+//     await registration.save();
+//     res.json({ message: 'Payment successful' });
+//   } else {
+//     res.json({ message: 'Payment failed' });
+//   }
+// };
